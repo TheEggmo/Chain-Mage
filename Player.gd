@@ -17,8 +17,9 @@ var can_grapple := true
 
 var hook_points : Array
 
-var hp
-var max_hp
+var hp setget _set_hp
+export var max_hp = 3
+export var iframes = false
 
 var falling := false
 var true_falling := false
@@ -32,6 +33,10 @@ func _ready():
 	
 	$GrappleChain.visible = false
 	$GrappleChain.set_as_toplevel(true)
+	
+	hp = max_hp
+	
+	$Sprite.animation = "default"
 
 
 func _physics_process(delta):
@@ -39,6 +44,11 @@ func _physics_process(delta):
 	
 	if !falling:
 		safe_position = global_position
+		$Sprite.animation = "default"
+		$SweatParticles.emitting = false
+	else:
+		$Sprite.animation = "sweat"
+		$SweatParticles.emitting = true
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().reload_current_scene()
@@ -49,6 +59,7 @@ func _physics_process(delta):
 		$FallTimer.paused = false
 		
 	if true_falling:
+		$SweatParticles.emitting = false
 		rotate(0.3)
 		scale.x = lerp(scale.x, 0.1, 0.03)
 		scale.y = lerp(scale.y, 0.1, 0.03)
@@ -60,6 +71,7 @@ func _physics_process(delta):
 			scale.y = 1
 			rotation = 0
 			velocity = Vector2.ZERO
+			self.hp -= 1
 	else:
 		if Input.is_action_just_pressed("LEFT_CLICK") && !Input.is_action_pressed("RIGHT_CLICK"):
 			$AnimationPlayer.play("Fire")
@@ -245,3 +257,15 @@ func _on_PitDetector_body_exited(body):
 func _on_FallTimer_timeout():
 	true_falling = true
 	clear_hookprojectile_points()
+
+func _set_hp(new):
+	if iframes:
+		return
+	hp = new
+	if hp <= 0:
+		print("player died")
+	else:
+		iframes = true
+#		$IFrameTimer.start()
+		$EffectPlayer.play("Blink")
+	

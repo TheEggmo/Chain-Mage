@@ -11,6 +11,7 @@ var friction = 0.1
 
 var free_movement := true setget _set_free_movement
 var falling := false setget _set_falling
+var true_falling := false
 
 var attached := false
 
@@ -18,7 +19,7 @@ var armored := false
 var armor_strength : float = 0 setget _set_armor_strength
 
 func _physics_process(delta):
-	if falling && velocity.length() < 300:
+	if (falling && velocity.length() < 300) || true_falling:
 		fall()
 	else:
 		if free_movement:
@@ -44,6 +45,7 @@ func _set_free_movement(value):
 	free_movement = value
 
 func fall():
+	true_falling = true
 	rotate(0.1)
 	scale.x = lerp(scale.x, 0.1, 0.01)
 	scale.y = lerp(scale.y, 0.1, 0.01)

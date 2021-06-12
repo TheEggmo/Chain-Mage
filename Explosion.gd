@@ -2,6 +2,11 @@ extends Area2D
 
 var dying := false
 
+var force = Vector2.ZERO
+
+#func _ready():
+#	randomize()
+#	rotate(rand_range(0, PI))
 
 func _physics_process(delta):
 	modulate.a = move_toward(modulate.a, 0, 0.02)
@@ -20,4 +25,4 @@ func _on_DefuseTimer_timeout():
 
 func _on_PlayerDetector_body_entered(body):
 	var dir = global_position.direction_to(body.global_position)
-	body.velocity += dir * 3000
+	body.velocity += dir * 1 + force * 5

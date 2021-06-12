@@ -8,6 +8,7 @@ radius = 16.0
 
 [node name="HookProjectile" type="Node2D"]
 script = ExtResource( 1 )
+lifetime = 0.7
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -28,9 +29,8 @@ collision_mask = 20
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 0.5
 one_shot = true
-autostart = true
 
 [connection signal="body_entered" from="WallDetector" to="." method="_on_WallDetector_body_entered"]
 [connection signal="body_entered" from="ObjectDetector" to="." method="_on_ObjectDetector_body_entered"]

@@ -5,12 +5,19 @@ signal wall_hit
 signal object_hit
 
 var direction : Vector2
-export var speed = 1500
+export var speed = 1000
+
+export var lifetime := 1.0
+
+func _ready():
+	$Timer.start(lifetime)
 
 func _physics_process(delta):
 	global_position += direction * speed * delta
 	
 	rotate(.01)
+	
+	modulate.a = $Timer.time_left/lifetime
 
 
 func _on_WallDetector_body_entered(body):

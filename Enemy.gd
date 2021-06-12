@@ -11,6 +11,17 @@ func _physics_process(delta):
 			velocity = lerp(velocity, Vector2.ZERO, friction)
 			if player:
 				direction = global_position.direction_to(player.global_position)
+			
+			if direction == Vector2.ZERO:
+				$AnimationPlayer.play("Idle")
+			else:
+				$AnimationPlayer.play("Run")
+			
+			if direction.x > 0:
+				$Sprite.flip_h = false
+			elif direction.x < 0:
+				$Sprite.flip_h = true
+			
 			direction *= speed
 			velocity = move_and_slide(velocity + direction)
 		else:

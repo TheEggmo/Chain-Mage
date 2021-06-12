@@ -60,7 +60,7 @@ var death_particles = preload("res://DeathParticles.tscn")
 func destroy():
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
-	new_death_particles.modulate = modulate
+	new_death_particles.modulate = $Sprite.self_modulate
 	get_tree().get_root().add_child(new_death_particles)
 	
 	emit_signal("hook_destroyed", self)

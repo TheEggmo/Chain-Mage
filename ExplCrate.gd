@@ -18,5 +18,6 @@ func destroy():
 	if !falling:
 		var new_explosion = explosion.instance()
 		new_explosion.global_position = global_position
+		new_explosion.force = velocity
 		get_tree().get_root().add_child(new_explosion)
 	queue_free()
