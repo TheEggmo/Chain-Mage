@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "HookProjectile",
 "language": "GDScript",
 "path": "res://HookProjectile.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Obj",
+"language": "GDScript",
+"path": "res://Object.gd"
 } ]
 _global_script_class_icons={
 "HookPoint": "",
-"HookProjectile": ""
+"HookProjectile": "",
+"Obj": ""
 }
 
 [application]
@@ -102,6 +108,7 @@ RELOAD={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemy"
 2d_physics/layer_4="Pit"
+2d_physics/layer_5="Bone"
 
 [physics]
 
@@ -109,4 +116,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.12549, 0.145098, 0.188235, 1 )
 environment/default_environment="res://default_env.tres"

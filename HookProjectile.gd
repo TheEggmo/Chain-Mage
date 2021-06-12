@@ -5,7 +5,7 @@ signal wall_hit
 signal object_hit
 
 var direction : Vector2
-export var speed = 1000
+export var speed = 1500
 
 func _physics_process(delta):
 	global_position += direction * speed * delta

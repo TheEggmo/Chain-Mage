@@ -25,40 +25,41 @@ var true_falling := false
 var safe_position : Vector2
 
 func _ready():
-	$IndicatorLines.set_as_toplevel(true)
+#	$IndicatorLines.set_as_toplevel(true)
+#	$IndicatorLines/Line2D.points.resize(0)
 	indicator_line = $IndicatorLines/Line2D.duplicate()
-	$IndicatorLines/Line2D.queue_free()
-	indicator_line.points.resize(0)
+#	$IndicatorLines/Line2D.queue_free()
 	
 	$GrappleChain.visible = false
 	$GrappleChain.set_as_toplevel(true)
 
 
 func _physics_process(delta):
+#	$IndicatorLines.global_position = global_position
+	
 	if !falling:
 		safe_position = global_position
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().reload_current_scene()
 	
-	if falling && velocity.length() > 550:
-		falling = false
+	if (falling && velocity.length() > 550) || grappling:
 		$FallTimer.paused = true
 	else:
 		$FallTimer.paused = false
 		
-	if falling && true_falling:
-			rotate(0.3)
-			scale.x = lerp(scale.x, 0.1, 0.03)
-			scale.y = lerp(scale.y, 0.1, 0.03)
-			if scale.x < 0.2:
-				falling = false
-				true_falling = false
-				global_position = safe_position
-				scale.x = 1
-				scale.y = 1
-				rotation = 0
-				velocity = Vector2.ZERO
+	if true_falling:
+		rotate(0.3)
+		scale.x = lerp(scale.x, 0.1, 0.03)
+		scale.y = lerp(scale.y, 0.1, 0.03)
+		if scale.x < 0.2:
+			falling = false
+			true_falling = false
+			global_position = safe_position
+			scale.x = 1
+			scale.y = 1
+			rotation = 0
+			velocity = Vector2.ZERO
 	else:
 		if Input.is_action_just_pressed("LEFT_CLICK") && !Input.is_action_pressed("RIGHT_CLICK"):
 			$AnimationPlayer.play("Fire")
@@ -145,8 +146,8 @@ func _add_hookprojectile_point_wall(point : Vector2):
 	if hook_points.size() > 1:
 		can_grapple = false
 	
-	var new_indicator_line = indicator_line.duplicate()
-	$IndicatorLines.add_child(new_indicator_line.duplicate())
+#	var new_indicator_line = indicator_line.duplicate()
+#	$IndicatorLines.add_child(new_indicator_line.duplicate())
 
 func _add_hookprojectile_point_object(object):
 	for hook in hook_points:
@@ -183,15 +184,27 @@ func clear_hookprojectile_points():
 func update_hookprojectile_points():
 	if hook_points.empty(): return
 	
+	# Erase existing lines
 	var lines = $IndicatorLines.get_children()
+	for line in lines:
+		line.queue_free()
 	
+	# Create new lines
+	if Input.is_action_pressed("RIGHT_CLICK"):
+		return
 	var i = 0
-#	for line in $IndicatorLines.get_children():
-#		if i >= hook_points.size(): line.queue_free()
-#		if !is_instance_valid(hook_points[i]): continue
-#		line.points[0] = global_position
-#		line.points[1] = hook_points[i].global_position
-#		i += 1
+	for hookpoint in hook_points:
+		var new_indicator_line : Line2D = indicator_line.duplicate()
+#		new_indicator_line.points.append(Vector2.ZERO)
+#		new_indicator_line.points.append(Vector2.ZERO)
+		new_indicator_line.points[0] = Vector2(0, 16)
+		new_indicator_line.points[1] = to_local(hook_points[i].global_position)
+#		new_indicator_line.points.push_back(global_position + Vector2(0, 16))
+#		new_indicator_line.points.push_back(hook_points[i].global_position)
+#		print(new_indicator_line.points)
+#		$IndicatorLines.call_deferred("add_child", new_indicator_line)
+		$IndicatorLines.add_child(new_indicator_line)
+		i += 1
 
 func remove_hookpoint(hookpoint):
 	var idx = hook_points.find(hookpoint)
@@ -224,8 +237,10 @@ func _on_PitDetector_body_entered(body):
 
 func _on_PitDetector_body_exited(body):
 	if !true_falling:
-		falling = false
 		$FallTimer.stop()
+		falling = false
+		true_falling = false
+
 
 func _on_FallTimer_timeout():
 	true_falling = true
