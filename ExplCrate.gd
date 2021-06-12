@@ -6,10 +6,11 @@ var velocity : Vector2
 var speed = 25
 var friction = 0.1
 
+var deathParticles = preload("res://DeathParticles.tscn")
+
 var direction := Vector2.ZERO
 
 var free_movement := true setget _set_free_movement
-
 var falling := false
 
 func _physics_process(delta):
@@ -23,22 +24,22 @@ func _physics_process(delta):
 		if free_movement:
 			direction = Vector2.ZERO
 			velocity = lerp(velocity, Vector2.ZERO, friction)
-			if player:
-				direction = global_position.direction_to(player.global_position)
+	#		if player:
+	#			direction = global_position.direction_to(player.global_position)
 			direction *= speed
 			velocity = move_and_slide(velocity + direction)
 		else:
-			velocity = move_and_slide(velocity)
+			move_and_slide(velocity + direction)
 	velocity = velocity.clamped(1000)
 
 
 func _on_Area2D_body_entered(body):
 	if body == self || body.falling:
 		return
-#	print("enemy collision")
+	print("enemy collision")
 	if !free_movement || !body.free_movement:
-		if velocity.length() > 300 || body.velocity.length() > 300:
-			destroy()
+		destroy()
+		if body.has_method("destroy"):
 			body.destroy()
 		
 
@@ -49,15 +50,20 @@ func _set_free_movement(value):
 	
 #	$Area2D.set_deferred("monitoring", !value)
 
+var explosion = preload("res://Explosion.tscn")
 var death_particles = preload("res://DeathParticles.tscn")
 func destroy():
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
+	new_death_particles.modulate = Color8(151, 9, 9, 255)
 	if falling:
 		new_death_particles.scale = scale * 2
 	get_tree().get_root().add_child(new_death_particles)
+	if !falling:
+		var new_explosion = explosion.instance()
+		new_explosion.global_position = global_position
+		get_tree().get_root().add_child(new_explosion)
 	queue_free()
-
 
 func _on_PitDetector_body_entered(body):
 	falling = true

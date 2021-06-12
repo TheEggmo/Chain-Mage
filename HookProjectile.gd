@@ -9,6 +9,8 @@ export var speed = 1000
 
 func _physics_process(delta):
 	global_position += direction * speed * delta
+	
+	rotate(.01)
 
 
 func _on_WallDetector_body_entered(body):
