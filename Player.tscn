@@ -114,10 +114,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15, 0.3, 0.45, 0.6, 0.75, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.12549 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:iframes")
@@ -184,6 +184,7 @@ current = true
 
 [node name="ReelNoise" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "Chain"
 
 [node name="GrappleChain" type="Line2D" parent="."]
 z_index = -1
@@ -223,6 +224,7 @@ one_shot = true
 anims/Blink = SubResource( 16 )
 
 [node name="SweatParticles" type="Particles2D" parent="."]
+visible = false
 position = Vector2( 0, -25 )
 z_index = 3
 emitting = false

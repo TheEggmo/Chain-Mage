@@ -37,3 +37,18 @@ func _physics_process(delta):
 		else:
 			velocity = move_and_slide(velocity)
 	velocity = velocity.clamped(1000)
+
+
+func destroy():
+	if dying:
+		return
+	dying = true
+	var new_death_particles = death_particles.instance()
+	new_death_particles.global_position = global_position
+	new_death_particles.modulate = Color.darkgreen
+	if falling:
+		new_death_particles.scale = scale * 2
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
+	emit_signal("on_death")
+	play_deathsound()
+	queue_free()

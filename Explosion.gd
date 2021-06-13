@@ -4,9 +4,9 @@ var dying := false
 
 var force = Vector2.ZERO
 
-#func _ready():
-#	randomize()
-#	rotate(rand_range(0, PI))
+func _ready():
+	randomize()
+	rotation_degrees += stepify(randi()%360, 90)
 
 func _physics_process(delta):
 	modulate.a = move_toward(modulate.a, 0, 0.02)
@@ -15,6 +15,7 @@ func _physics_process(delta):
 
 
 func _on_Explosion_body_entered(body):
+	body.armor_strength -= 100
 	body.destroy()
 
 

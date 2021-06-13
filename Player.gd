@@ -72,6 +72,7 @@ func _physics_process(delta):
 			rotation = 0
 			velocity = Vector2.ZERO
 			self.hp -= 1
+			clear_hookprojectile_points()
 	else:
 		if Input.is_action_just_pressed("LEFT_CLICK") && !Input.is_action_pressed("RIGHT_CLICK"):
 			$AnimationPlayer.play("Fire")
@@ -263,9 +264,12 @@ func _on_FallTimer_timeout():
 	true_falling = true
 	clear_hookprojectile_points()
 
+var hitsound = preload("res://HitSound.tscn")
 func _set_hp(new):
 	if iframes:
 		return
+	var new_hitsound = hitsound.instance()
+	get_parent().add_child(new_hitsound)
 	hp = new
 	if hp <= 0:
 		print("player died")

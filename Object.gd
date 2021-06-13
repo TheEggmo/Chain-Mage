@@ -60,6 +60,12 @@ func fall():
 	if scale.x < 0.2:
 		destroy()
 
+
+var hitsound = preload("res://HitSound.tscn")
+func play_deathsound():
+	var new_hitsound = hitsound.instance()
+	get_parent().add_child(new_hitsound)
+
 var death_particles = preload("res://DeathParticles.tscn")
 var dying := false
 func destroy():
@@ -72,6 +78,7 @@ func destroy():
 		new_death_particles.scale = scale * 2
 	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	emit_signal("on_death")
+	play_deathsound()
 	queue_free()
 
 func _on_PitDetector_body_entered(body):

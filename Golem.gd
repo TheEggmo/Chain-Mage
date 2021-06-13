@@ -43,15 +43,39 @@ func _physics_process(delta):
 	velocity = velocity.clamped(1000)
 
 func armor_break():
+	if dying:
+		return
 	$Chestplate.visible = false
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
 	new_death_particles.modulate = Color.gray
 	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	armored = false
+	if is_instance_valid($Creaking):
+		$Creaking.queue_free()
+	$ArmorBreak.play()
 
 func _set_armor_strength(new):
 	armor_strength = new
 	if armor_strength <= 0:
 		armor_break()
 	$Particles2D.emitting = true
+	if is_instance_valid($Creaking) && !$Creaking.playing:
+		$Creaking.playing = true
+
+func destroy():
+	if armor_strength > 0:
+		self.armor_strength -= 100
+		return
+	if dying:
+		return
+	dying = true
+	var new_death_particles = death_particles.instance()
+	new_death_particles.global_position = global_position
+	new_death_particles.modulate = Color.brown
+	if falling:
+		new_death_particles.scale = scale * 2
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
+	emit_signal("on_death")
+	play_deathsound()
+	queue_free()
