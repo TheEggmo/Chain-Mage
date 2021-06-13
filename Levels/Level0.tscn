@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Levels/Level.gd" type="Script" id=1]
 [ext_resource path="res://Floor_cave.png" type="Texture" id=2]
@@ -14,18 +14,12 @@
 [ext_resource path="res://Button.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Gate.tscn" type="PackedScene" id=13]
 
-[sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 792, 920, 2096, 912, 2104, 1216, 792, 1224 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 792, 920, 2096, 912, 2104, 1216, 792, 1224 ) ]
-
 [node name="Level" type="Node2D"]
 script = ExtResource( 1 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="NavigationPolygon" type="NavigationPolygonInstance" parent="Navigation2D"]
-navpoly = SubResource( 1 )
 
 [node name="BG" type="CanvasLayer" parent="."]
 layer = -1
@@ -86,6 +80,3 @@ new_scale = 2
 
 [node name="Button" parent="." instance=ExtResource( 12 )]
 position = Vector2( -2752, -688 )
-
-[connection signal="pressed" from="Button" to="Gate" method="reduce_input"]
-[connection signal="released" from="Button" to="Gate" method="increase_input"]

@@ -13,8 +13,18 @@ func _physics_process(delta):
 		if free_movement:
 			direction = Vector2.ZERO
 			velocity = lerp(velocity, Vector2.ZERO, friction)
-			if player:
-				direction = global_position.direction_to(player.global_position)
+			var path : PoolVector2Array # path to player
+			if is_instance_valid(player) && is_instance_valid(navigation):
+				path = navigation.get_simple_path(global_position, player.global_position)
+			
+			if path: 
+#				print(path_to_player)
+				if path[path.size()-1] == player.global_position && path[0] == global_position:
+					# CAN reach player
+					direction = global_position.direction_to(path[1])
+				else:
+					# CAN NOT reach player
+					direction = Vector2.ZERO
 			
 			if direction == Vector2.ZERO:
 				$AnimationPlayer.play("Idle")
@@ -37,7 +47,7 @@ func armor_break():
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
 	new_death_particles.modulate = Color.gray
-	get_tree().get_root().add_child(new_death_particles)
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	armored = false
 
 func _set_armor_strength(new):

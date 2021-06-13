@@ -20,10 +20,14 @@ var attached := false
 var armored := false
 var armor_strength : float = 0 setget _set_armor_strength
 
+export var harmful := true
+
 signal on_death
 
 func _physics_process(delta):
-	if (falling && velocity.length() < 300) || true_falling:
+#	if (falling && velocity.length() < 300) || true_falling:
+#		fall()
+	if falling:
 		fall()
 	else:
 		if free_movement:
@@ -57,12 +61,16 @@ func fall():
 		destroy()
 
 var death_particles = preload("res://DeathParticles.tscn")
+var dying := false
 func destroy():
+	if dying:
+		return
+	dying = true
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
 	if falling:
 		new_death_particles.scale = scale * 2
-	get_tree().get_root().add_child(new_death_particles)
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	emit_signal("on_death")
 	queue_free()
 
@@ -70,6 +78,9 @@ func _on_PitDetector_body_entered(body):
 	falling = true
 #	$CollisionShape2D.set_deferred("disabled", true)
 	set_collision_layer_bit(2, false)
+#	$CollisionShape2D.set_deferred("disabled", true)
+	set_collision_mask_bit(1, false)
+	set_collision_mask_bit(2, false)
 	$Area2D/CollisionShape2D.set_deferred("monitoring", false)
 
 
@@ -77,6 +88,9 @@ func _on_PitDetector_body_exited(body):
 	falling = false
 #	$CollisionShape2D.set_deferred("disabled", false)
 	set_collision_layer_bit(2, true)
+#	$CollisionShape2D.set_deferred("disabled", false)
+	set_collision_mask_bit(1, true)
+	set_collision_mask_bit(2, true)
 	$Area2D/CollisionShape2D.set_deferred("monitoring", true)
 
 func _set_falling(new : bool):

@@ -29,6 +29,8 @@ func _set_pressed(new):
 	if pressed:
 		emit_signal("pressed")
 		print("button pressed")
+		$Sprite.frame = 2
 	else:
 		emit_signal("released")
 		print("button released")
+		$Sprite.frame = 0

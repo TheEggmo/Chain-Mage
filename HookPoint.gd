@@ -28,8 +28,10 @@ func _process(delta):
 
 func _physics_process(delta):
 	if is_instance_valid(attached_object):
-		if attached_object.falling && attached_object.velocity.length() < 300:
+		if attached_object.true_falling:
 			destroy()
+#		if attached_object.falling && !activated:
+#			destroy()
 		if activated:
 			if !attached_object.armored:
 				attached_object.free_movement = false
@@ -53,7 +55,7 @@ func _physics_process(delta):
 		if is_instance_valid(next_point) && !next_point.immobile:
 			next_point.global_position += next_point.global_position.direction_to(global_position) * grapple_speed * delta
 			
-		if !is_instance_valid(previous_point) && !is_instance_valid(next_point) && !attached_object.armored:
+		if !is_instance_valid(previous_point) && !is_instance_valid(next_point) && is_instance_valid(attached_object) && !attached_object.armored:
 			global_position += global_position.direction_to(player.global_position) * grapple_speed * delta
 
 var death_particles = preload("res://DeathParticles.tscn")
@@ -61,7 +63,7 @@ func destroy():
 	var new_death_particles = death_particles.instance()
 	new_death_particles.global_position = global_position
 	new_death_particles.modulate = $Sprite.self_modulate
-	get_tree().get_root().add_child(new_death_particles)
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	
 	emit_signal("hook_destroyed", self)
 	activated = false

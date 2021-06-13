@@ -1,0 +1,122 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Levels/Level.gd" type="Script" id=1]
+[ext_resource path="res://Floor_cave.png" type="Texture" id=2]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ExplCrate.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Skeleton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Golem.tscn" type="PackedScene" id=6]
+[ext_resource path="res://TileMap.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Spawner.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Crate.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Pit.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Button.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Gate.tscn" type="PackedScene" id=13]
+
+[sub_resource type="NavigationPolygon" id=1]
+vertices = PoolVector2Array( 128, 144, 128, -56, 208, -56, 200, 144, 208, -328, 1016, -328, 1016, 400, 200, 400 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 2, 4, 5, 6 ), PoolIntArray( 2, 6, 7, 3 ) ]
+outlines = [ PoolVector2Array( 128, -56, 208, -56, 208, -328, 1016, -328, 1016, 400, 200, 400, 200, 144, 128, 144 ) ]
+
+[node name="Level" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygon" type="NavigationPolygonInstance" parent="Navigation2D"]
+navpoly = SubResource( 1 )
+
+[node name="BG" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enable = true
+
+[node name="TextureRect" type="TextureRect" parent="BG"]
+anchor_left = -1.955
+anchor_top = -2.249
+margin_left = 472.0
+margin_top = 400.1
+margin_right = 2672.0
+margin_bottom = 1920.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Player" parent="." instance=ExtResource( 11 )]
+position = Vector2( -96, 48 )
+
+[node name="Enemies" type="YSort" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource( 3 )]
+position = Vector2( -3056, -200 )
+
+[node name="Crate" parent="Enemies" instance=ExtResource( 9 )]
+position = Vector2( -2936, -152 )
+
+[node name="ExplCrate" parent="Enemies" instance=ExtResource( 4 )]
+position = Vector2( -2976, -312 )
+
+[node name="Skeleton" parent="Enemies" instance=ExtResource( 5 )]
+position = Vector2( -2832, -280 )
+
+[node name="Golem" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( -2960, -232 )
+
+[node name="Golem2" parent="Enemies" instance=ExtResource( 6 )]
+position = Vector2( 952, 16 )
+
+[node name="TileMap" parent="." instance=ExtResource( 7 )]
+collision_mask = 0
+tile_data = PoolIntArray( -589823, 1, 196609, -589822, 1, 3, -589821, 1, 3, -589820, 1, 3, -589819, 1, 3, -589818, 1, 3, -589817, 1, 3, -589816, 1, 3, -589815, 1, 3, -589814, 1, 3, -589813, 1, 3, -589812, 1, 3, -589811, 1, 3, -589810, 1, 3, -589809, 1, 3, -589808, 1, 3, -589807, 1, 0, -458802, 0, 0, -458801, 0, 0, -458800, 0, 0, -458799, 0, 0, -458798, 0, 0, -458797, 0, 0, -458796, 0, 0, -458795, 0, 0, -458794, 0, 0, -524287, 1, 1, -524286, 1, 65539, -524285, 1, 131073, -524284, 1, 131073, -524283, 1, 131073, -524282, 1, 131073, -524281, 1, 131073, -524280, 1, 131073, -524279, 1, 131073, -524278, 1, 131073, -524277, 1, 131073, -524276, 1, 131073, -524275, 1, 131073, -524274, 1, 131073, -524273, 1, 131073, -524272, 1, 131074, -524271, 1, 131075, -393266, 0, 0, -393258, 0, 0, -458751, 1, 1, -458750, 1, 131075, -458736, 1, 1, -458735, 1, 131075, -327730, 0, 0, -327722, 0, 0, -393215, 1, 1, -393214, 1, 131075, -393200, 1, 1, -393199, 1, 131075, -262194, 0, 0, -262186, 0, 0, -327679, 1, 1, -327678, 1, 131075, -327664, 1, 1, -327663, 1, 131075, -196658, 0, 0, -196650, 0, 0, -262143, 1, 1, -262142, 1, 131075, -262128, 1, 1, -262127, 1, 131075, -131122, 0, 0, -131114, 0, 0, -131077, 1, 196609, -131076, 1, 3, -131075, 1, 3, -131074, 1, 3, -131073, 1, 3, -196608, 1, 3, -196607, 1, 65537, -196606, 1, 131075, -196592, 1, 131072, -196591, 1, 196611, -65586, 0, 0, -65578, 0, 0, -65541, 1, 1, -65540, 1, 65539, -65539, 1, 131073, -65538, 1, 131073, -65537, 1, 131073, -131072, 1, 131073, -131071, 1, 131073, -131070, 1, 196611, -50, 0, 0, -42, 0, 0, -5, 1, 1, -4, 1, 131075, 65486, 0, 0, 65487, 0, 0, 65488, 0, 0, 65489, 0, 0, 65490, 0, 0, 65491, 0, 0, 65492, 0, 0, 65493, 0, 0, 65494, 0, 0, 65531, 1, 1, 65532, 1, 131075, 131067, 1, 1, 131068, 1, 131075, 196603, 1, 1, 196604, 1, 2, 196605, 1, 3, 196606, 1, 3, 196607, 1, 3, 131072, 1, 3, 131073, 1, 3, 131074, 1, 0, 131088, 1, 196609, 131089, 1, 0, 262139, 1, 131072, 262140, 1, 131073, 262141, 1, 131073, 262142, 1, 131073, 262143, 1, 131073, 196608, 1, 131073, 196609, 1, 131074, 196610, 1, 131075, 196624, 1, 1, 196625, 1, 131075, 262145, 1, 1, 262146, 1, 131075, 262160, 1, 1, 262161, 1, 131075, 327681, 1, 1, 327682, 1, 131075, 327696, 1, 1, 327697, 1, 131075, 393217, 1, 1, 393218, 1, 131075, 393232, 1, 1, 393233, 1, 131075, 458753, 1, 1, 458754, 1, 131075, 458768, 1, 1, 458769, 1, 131075, 524289, 1, 1, 524290, 1, 2, 524291, 1, 3, 524292, 1, 3, 524293, 1, 3, 524294, 1, 3, 524295, 1, 3, 524296, 1, 3, 524297, 1, 3, 524298, 1, 3, 524299, 1, 3, 524300, 1, 3, 524301, 1, 3, 524302, 1, 3, 524303, 1, 3, 524304, 1, 65537, 524305, 1, 131075, 589825, 1, 131072, 589826, 1, 131073, 589827, 1, 131073, 589828, 1, 131073, 589829, 1, 131073, 589830, 1, 131073, 589831, 1, 131073, 589832, 1, 131073, 589833, 1, 131073, 589834, 1, 131073, 589835, 1, 131073, 589836, 1, 131073, 589837, 1, 131073, 589838, 1, 131073, 589839, 1, 131073, 589840, 1, 131073, 589841, 1, 196611 )
+
+[node name="Pit" parent="." instance=ExtResource( 10 )]
+tile_data = PoolIntArray( -524286, 1, 196609, -524285, 1, 3, -524284, 1, 3, -524283, 1, 3, -524282, 1, 3, -524281, 1, 3, -524280, 1, 3, -524279, 1, 3, -524278, 1, 3, -524277, 1, 3, -524276, 1, 3, -524275, 1, 3, -524274, 1, 3, -524273, 1, 3, -524272, 1, 0, -458750, 1, 1, -458749, 1, 65538, -458748, 1, 65538, -458747, 1, 65538, -458746, 1, 65538, -458745, 1, 65538, -458744, 1, 65538, -458743, 1, 65538, -458742, 1, 65538, -458741, 1, 65538, -458740, 1, 65538, -458739, 1, 65538, -458738, 1, 65538, -458737, 1, 65538, -458736, 1, 131075, -393214, 1, 131072, -393213, 1, 131073, -393212, 1, 131073, -393211, 1, 131073, -393210, 1, 131073, -393209, 1, 131073, -393208, 1, 131073, -393207, 1, 131073, -393206, 1, 131073, -393205, 1, 131073, -393204, 1, 131073, -393203, 1, 131073, -393202, 1, 131073, -393201, 1, 131073, -393200, 1, 196611, 393218, 1, 196609, 393219, 1, 3, 393220, 1, 3, 393221, 1, 3, 393222, 1, 3, 393223, 1, 3, 393224, 1, 3, 393225, 1, 3, 393226, 1, 3, 393227, 1, 3, 393228, 1, 3, 393229, 1, 3, 393230, 1, 3, 393231, 1, 0, 458754, 1, 1, 458755, 1, 65538, 458756, 1, 65538, 458757, 1, 65538, 458758, 1, 65538, 458759, 1, 65538, 458760, 1, 65538, 458761, 1, 65538, 458762, 1, 65538, 458763, 1, 65538, 458764, 1, 65538, 458765, 1, 65538, 458766, 1, 65538, 458767, 1, 131075, 524290, 1, 131072, 524291, 1, 131073, 524292, 1, 131073, 524293, 1, 131073, 524294, 1, 131073, 524295, 1, 131073, 524296, 1, 131073, 524297, 1, 131073, 524298, 1, 131073, 524299, 1, 131073, 524300, 1, 131073, 524301, 1, 131073, 524302, 1, 131073, 524303, 1, 196611 )
+
+[node name="Spawner" parent="." instance=ExtResource( 8 )]
+position = Vector2( -2808, -96 )
+scene = "res://Crate.tscn"
+texture = "res://crate.png"
+new_scale = 2
+
+[node name="Spawner2" parent="." instance=ExtResource( 8 )]
+position = Vector2( -2808, -184 )
+scene = "res://ExplCrate.tscn"
+texture = "res://explCrate.png"
+new_scale = 2
+
+[node name="Gate" parent="." instance=ExtResource( 13 )]
+
+[node name="Gate2" parent="." instance=ExtResource( 13 )]
+tile_data = PoolIntArray( -65535, 1, 0, 1, 1, 0, 65537, 1, 0 )
+inputs_required = 0
+
+[node name="Gate3" parent="." instance=ExtResource( 13 )]
+tile_data = PoolIntArray( -131056, 1, 0, -65520, 1, 0, 16, 1, 0, 65552, 1, 0 )
+
+[node name="Button" parent="." instance=ExtResource( 12 )]
+position = Vector2( -2752, -688 )
+
+[node name="Button2" parent="." instance=ExtResource( 12 )]
+visible = false
+position = Vector2( 176, -32 )
+
+[node name="Button3" parent="." instance=ExtResource( 12 )]
+visible = false
+position = Vector2( 176, 24 )
+
+[node name="Button4" parent="." instance=ExtResource( 12 )]
+visible = false
+position = Vector2( 176, 80 )
+
+[node name="Button5" parent="." instance=ExtResource( 12 )]
+visible = false
+position = Vector2( 176, 136 )
+
+[connection signal="on_death" from="Enemies/Golem2" to="Gate3" method="reduce_input"]
+[connection signal="pressed" from="Button2" to="Gate2" method="lock"]
+[connection signal="pressed" from="Button3" to="Gate2" method="lock"]
+[connection signal="pressed" from="Button4" to="Gate2" method="lock"]
+[connection signal="pressed" from="Button5" to="Gate2" method="lock"]

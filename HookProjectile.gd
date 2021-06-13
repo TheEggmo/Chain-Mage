@@ -25,8 +25,11 @@ func _on_WallDetector_body_entered(body):
 	direction = Vector2.ZERO
 	destroy()
 
-
+var triggered := false
 func _on_ObjectDetector_body_entered(body):
+	if triggered:
+		return
+	triggered = true
 	emit_signal("object_hit", body)
 	destroy()
 

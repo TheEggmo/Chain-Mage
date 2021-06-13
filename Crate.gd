@@ -6,6 +6,6 @@ func destroy():
 	new_death_particles.modulate = Color8(121, 65, 0, 255)
 	if falling:
 		new_death_particles.scale = scale * 2
-	get_tree().get_root().add_child(new_death_particles)
+	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	emit_signal("on_death")
 	queue_free()

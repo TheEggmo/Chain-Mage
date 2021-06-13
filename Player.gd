@@ -50,7 +50,7 @@ func _physics_process(delta):
 		$Sprite.animation = "sweat"
 		$SweatParticles.emitting = true
 	
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("RESTART"):
 		get_tree().reload_current_scene()
 	
 	if (falling && velocity.length() > 550) || grappling:
@@ -142,6 +142,10 @@ func _physics_process(delta):
 		velocity = move_and_slide(velocity + direction)
 	
 	update_hookprojectile_points()
+	
+	if Input.is_action_just_pressed("ui_accept"):
+		#TEMP
+		$CollisionShape2D.set_deferred("disabled", !$CollisionShape2D.disabled)
 
 func _add_hookprojectile_point_wall(point : Vector2):
 	var new_hook_point : HookPoint = hook_point.instance()
@@ -194,7 +198,7 @@ func clear_hookprojectile_points():
 	can_grapple = true
 
 func update_hookprojectile_points():
-	if hook_points.empty(): return
+#	if hook_points.empty(): return
 	
 	# Erase existing lines
 	var lines = $IndicatorLines.get_children()
@@ -240,7 +244,8 @@ func remove_hookpoint(hookpoint):
 
 
 func _on_EnemyDetector_body_entered(body):
-	self.hp -= 1
+	if body.harmful:
+		self.hp -= 1
 
 
 func _on_PitDetector_body_entered(body):
