@@ -4,8 +4,8 @@ var direction := Vector2.ZERO
 
 #var dying := false
 
-func _ready():
-	speed = 350
+#func _ready():
+#	speed = 350
 
 var prev_position
 func _physics_process(delta):
@@ -38,7 +38,7 @@ func _on_SDTimer_timeout():
 
 func _on_Area2D_body_entered(body):
 	if body == player:
-		print("bone hit player")
+		return
 	else:
 		destroy()
 		if body.has_method("destroy"):

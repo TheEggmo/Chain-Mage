@@ -164,5 +164,6 @@ anims/Fire = SubResource( 16 )
 anims/Idle = SubResource( 17 )
 anims/Run = SubResource( 18 )
 
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 [connection signal="body_entered" from="PitDetector" to="." method="_on_PitDetector_body_entered"]
 [connection signal="body_exited" from="PitDetector" to="." method="_on_PitDetector_body_exited"]

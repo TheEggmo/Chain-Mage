@@ -56,3 +56,7 @@ func _fire():
 	new_bone.global_position = global_position
 	new_bone.direction = fire_direction
 	get_tree().get_root().get_node("Level/Enemies").add_child(new_bone)
+
+
+func _on_Area2D_body_exited(body):
+	pass # Replace with function body.

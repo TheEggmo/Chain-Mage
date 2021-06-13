@@ -33,3 +33,8 @@ func spawn_object():
 
 func _on_Timer_timeout():
 	spawn_object()
+
+func destroy():
+	queue_free()
+	if is_instance_valid(spawned_object):
+		spawned_object.destroy()

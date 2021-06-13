@@ -1,0 +1,11 @@
+You are the Chain Mage.
+
+Descent down the dungeon using your dexterity and magic chains.
+Vanquish enemies by joining them together and dragging them into eachother.
+Reach the deepest chamber and defeat the Stone Golem.
+
+Play using WASD and mouse.
+
+Made for the GMTK 2021 gamejam.
+Programming and game design by Bartłomiej "Eggmo" Płókarz.
+Art by Piotr "Zane" Wiśniewski.

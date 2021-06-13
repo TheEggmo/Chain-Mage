@@ -17,9 +17,9 @@
 [ext_resource path="res://LevelExit.tscn" type="PackedScene" id=15]
 
 [sub_resource type="NavigationPolygon" id=1]
-vertices = PoolVector2Array( 696, 144, 696, 400, 144, 400, 136, 144, -1272, -568, -848, -568, -848, -248, -1272, 320, -784, -248, -784, 0, -840, 0, -840, 208, -784, 320, -784, 208, 1160, 400, 1160, 144, 1352, 144, 1360, 400, 1352, -304, 2352, -304, 2360, 144, 2352, 392, 2544, 144, 2544, 392, 2352, 776, 1360, 776, 4512, 752, 4664, 840, 2960, 840, 4440, 752, 4664, -312, 4512, 680, 4440, 680, 3888, 296, 3888, 216, 3176, 32, 3176, -32, 3800, 216, 2960, -304, 3104, -32, 2960, 144, 3104, 32, 2960, 392, 3800, 296, 2640, 392, 2640, 144 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 6, 8, 9, 10 ), PoolIntArray( 7, 6, 10, 11 ), PoolIntArray( 12, 7, 11, 13 ), PoolIntArray( 14, 15, 16, 17 ), PoolIntArray( 17, 16, 18, 19, 20, 21 ), PoolIntArray( 20, 22, 23, 21 ), PoolIntArray( 17, 21, 24, 25 ), PoolIntArray( 26, 27, 28, 29 ), PoolIntArray( 30, 31, 32, 33, 34 ), PoolIntArray( 30, 27, 26, 31 ), PoolIntArray( 35, 36, 30, 34, 37 ), PoolIntArray( 38, 30, 36, 39 ), PoolIntArray( 40, 38, 39, 41 ), PoolIntArray( 33, 32, 29, 28, 42, 43 ), PoolIntArray( 42, 44, 45, 40, 43 ), PoolIntArray( 43, 40, 41, 35, 37 ) ]
-outlines = [ PoolVector2Array( 696, 144, 696, 400, 144, 400, 136, 144 ), PoolVector2Array( -1272, -568, -1272, 320, -784, 320, -784, 208, -840, 208, -840, 0, -784, 0, -784, -248, -848, -248, -848, -568 ), PoolVector2Array( 1160, 144, 1352, 144, 1352, -304, 2352, -304, 2360, 144, 2544, 144, 2544, 392, 2352, 392, 2352, 776, 1360, 776, 1360, 400, 1160, 400 ), PoolVector2Array( 2640, 144, 2960, 144, 2960, -304, 4664, -312, 4664, 840, 2960, 840, 2960, 392, 2640, 392 ), PoolVector2Array( 3800, 216, 3888, 216, 3888, 296, 3800, 296 ), PoolVector2Array( 3104, -32, 3176, -32, 3176, 32, 3104, 32 ), PoolVector2Array( 4440, 680, 4512, 680, 4512, 752, 4440, 752 ) ]
+vertices = PoolVector2Array( 696, 144, 696, 400, 144, 400, 136, 144, -1272, -568, -848, -568, -848, -248, -1272, 320, -784, -248, -784, 0, -840, 0, -840, 208, -784, 320, -784, 208, 2352, 776, 1360, 776, 1376, 392, 2352, 392, 1160, 400, 1160, 144, 1368, 152, 1352, -304, 2352, -304, 2360, 144, 2544, 392, 2544, 144, 2960, -304, 4664, -312, 4664, 840, 2960, 144, 2640, 392, 2640, 144, 2960, 392, 2960, 840 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7 ), PoolIntArray( 6, 8, 9, 10 ), PoolIntArray( 7, 6, 10, 11 ), PoolIntArray( 12, 7, 11, 13 ), PoolIntArray( 14, 15, 16, 17 ), PoolIntArray( 18, 19, 20, 16 ), PoolIntArray( 20, 21, 22, 23 ), PoolIntArray( 16, 20, 23, 17 ), PoolIntArray( 24, 17, 23, 25 ), PoolIntArray( 26, 27, 28, 29 ), PoolIntArray( 30, 31, 29, 32 ), PoolIntArray( 32, 29, 28 ), PoolIntArray( 32, 28, 33 ) ]
+outlines = [ PoolVector2Array( 696, 144, 696, 400, 144, 400, 136, 144 ), PoolVector2Array( -1272, -568, -1272, 320, -784, 320, -784, 208, -840, 208, -840, 0, -784, 0, -784, -248, -848, -248, -848, -568 ), PoolVector2Array( 1160, 144, 1368, 152, 1352, -304, 2352, -304, 2360, 144, 2544, 144, 2544, 392, 2352, 392, 2352, 776, 1360, 776, 1376, 392, 1160, 400 ), PoolVector2Array( 2640, 144, 2960, 144, 2960, -304, 4664, -312, 4664, 840, 2960, 840, 2960, 392, 2640, 392 ) ]
 
 [sub_resource type="DynamicFont" id=2]
 font_data = ExtResource( 14 )
@@ -381,6 +381,7 @@ position = Vector2( 2696, 368 )
 
 [node name="LevelExit" parent="." instance=ExtResource( 15 )]
 position = Vector2( 4960, 224 )
+next_level = "res://Levels/Level4.tscn"
 
 [connection signal="on_death" from="Enemies/Enemy7" to="Gate6" method="reduce_input"]
 [connection signal="on_death" from="Enemies/Enemy2" to="Gate4" method="reduce_input"]

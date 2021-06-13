@@ -51,18 +51,20 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="BG"]
-margin_left = -328.0
-margin_top = -328.0
-margin_right = 479.0
-margin_bottom = 355.0
+margin_left = -336.0
+margin_top = -360.0
+margin_right = 514.0
+margin_bottom = 421.0
 custom_fonts/font = SubResource( 2 )
-text = "press left mouse button to shoot a link ball.
+text = "use the wasd keys to move.
+
+press the left mouse button to shoot a link ball.
 link balls create links on things they hit.
 
-press and hold right mouse button to conjure chains 
-between links and drag them together
+press and hold the right mouse button to conjure chains 
+between links and drag them together.
 
-press space to destroy existing links 
+press space to destroy existing links .
 
 try creating a single link 
 and dragging yourself towards it.

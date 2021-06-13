@@ -77,15 +77,17 @@ func destroy():
 func activate():
 	activated = true
 	
-	var immobile_neighbours = 0
-	if is_instance_valid(previous_point) && previous_point.immobile:
-		immobile_neighbours += 1
-	if is_instance_valid(next_point) && next_point.immobile:
-		immobile_neighbours += 1
-	
-	if immobile_neighbours == 2:
-		modulate = Color(1, 0, 0)
-	elif immobile_neighbours == 1:
-		modulate = Color(1, 1, 0)
-	else:
-		modulate = Color(1, 1, 1)
+	if is_instance_valid(attached_object) && attached_object.boss && attached_object.phase != 1:
+		destroy()
+#	var immobile_neighbours = 0
+#	if is_instance_valid(previous_point) && previous_point.immobile:
+#		immobile_neighbours += 1
+#	if is_instance_valid(next_point) && next_point.immobile:
+#		immobile_neighbours += 1
+#
+##	if immobile_neighbours == 2:
+##		modulate = Color(1, 0, 0)
+##	elif immobile_neighbours == 1:
+##		modulate = Color(1, 1, 0)
+##	else:
+##		modulate = Color(1, 1, 1)

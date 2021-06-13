@@ -15,14 +15,14 @@ func reduce_input():
 	inputs_required -= 1
 	if inputs_required <= 0:
 		opened = true
-		print("gate open")
-	print("reducing input to " + str(inputs_required))
+#		print("gate open")
+#	print("reducing input to " + str(inputs_required))
 
 func increase_input():
 	inputs_required += 1
 	if inputs_required > 0:
 		opened = false
-		print("gate closed")
+#		print("gate closed")
 
 func _physics_process(delta):
 	if opened && !locked:

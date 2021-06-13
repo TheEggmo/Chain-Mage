@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://HookProjectile.gd" type="Script" id=1]
 [ext_resource path="res://hookProjectile.png" type="Texture" id=2]
+[ext_resource path="res://HookProjectileSound.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 16.0
@@ -31,6 +32,8 @@ shape = SubResource( 1 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="HookProjectileSound" parent="." instance=ExtResource( 3 )]
 
 [connection signal="body_entered" from="WallDetector" to="." method="_on_WallDetector_body_entered"]
 [connection signal="body_entered" from="ObjectDetector" to="." method="_on_ObjectDetector_body_entered"]

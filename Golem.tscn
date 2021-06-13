@@ -168,7 +168,6 @@ process_material = SubResource( 14 )
 
 [node name="Creaking" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-volume_db = 10.0
 bus = "Golem"
 
 [node name="ArmorBreak" type="AudioStreamPlayer" parent="."]

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://HitSound.gd" type="Script" id=1]
+[ext_resource path="res://blinkSound.wav" type="AudioStream" id=2]
+
+[node name="BlinkSound" type="AudioStreamPlayer"]
+stream = ExtResource( 2 )
+volume_db = -20.0
+autoplay = true
+bus = "Chain"
+script = ExtResource( 1 )
+
+[connection signal="finished" from="." to="." method="_on_HitSound_finished"]

@@ -5,6 +5,7 @@ var direction := Vector2.ZERO
 func _ready():
 	armored = true
 	armor_strength = 100
+	speed = 10
 
 func _physics_process(delta):
 	if falling && velocity.length() < 300 && !attached:
@@ -51,7 +52,7 @@ func armor_break():
 	new_death_particles.modulate = Color.gray
 	get_tree().get_root().get_node("Level/Enemies").add_child(new_death_particles)
 	armored = false
-	if is_instance_valid($Creaking):
+	if is_instance_valid(get_node_or_null("Creaking")):
 		$Creaking.queue_free()
 	$ArmorBreak.play()
 
@@ -60,8 +61,9 @@ func _set_armor_strength(new):
 	if armor_strength <= 0:
 		armor_break()
 	$Particles2D.emitting = true
-	if is_instance_valid($Creaking) && !$Creaking.playing:
-		$Creaking.playing = true
+	if get_node_or_null("Creaking"):
+		if !$Creaking.playing:
+			$Creaking.playing = true
 
 func destroy():
 	if armor_strength > 0:

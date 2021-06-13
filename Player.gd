@@ -34,7 +34,7 @@ func _ready():
 	$GrappleChain.visible = false
 	$GrappleChain.set_as_toplevel(true)
 	
-	hp = max_hp
+	self.hp = max_hp
 	
 	$Sprite.animation = "default"
 
@@ -52,6 +52,9 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("RESTART"):
 		get_tree().reload_current_scene()
+	
+	if Input.is_action_just_pressed("EXIT"):
+		get_tree().quit()
 	
 	if (falling && velocity.length() > 550) || grappling:
 		$FallTimer.paused = true
@@ -83,6 +86,7 @@ func _physics_process(delta):
 			new_hook_projectile.global_position = global_position
 			new_hook_projectile.connect("wall_hit", self, "_add_hookprojectile_point_wall")
 			new_hook_projectile.connect("object_hit", self, "_add_hookprojectile_point_object")
+			new_hook_projectile.connect("failed", self, "_hookprojectile_failed")
 			
 			get_parent().add_child(new_hook_projectile)
 			if hook_points.size() >= 1:
@@ -123,9 +127,10 @@ func _physics_process(delta):
 					direction *= grappling_speed
 				else:
 					hook_points[0].activate()
-				$GrappleChain.visible = true
-				$GrappleChain.points[0] = global_position + Vector2(0, 16)
-				$GrappleChain.points[1] = hook_points[0].global_position
+				if hook_points.size() == 1:
+					$GrappleChain.visible = true
+					$GrappleChain.points[0] = global_position + Vector2(0, 16)
+					$GrappleChain.points[1] = hook_points[0].global_position
 			elif hook_points.size() > 1:
 				# GRAPPLE TWO OBJECTS TOGETHER
 				for hook in hook_points:
@@ -144,9 +149,9 @@ func _physics_process(delta):
 	
 	update_hookprojectile_points()
 	
-	if Input.is_action_just_pressed("ui_accept"):
-		#TEMP
-		$CollisionShape2D.set_deferred("disabled", !$CollisionShape2D.disabled)
+#	if Input.is_action_just_pressed("ui_accept"):
+#		#TEMP
+#		$CollisionShape2D.set_deferred("disabled", !$CollisionShape2D.disabled)
 
 func _add_hookprojectile_point_wall(point : Vector2):
 	var new_hook_point : HookPoint = hook_point.instance()
@@ -268,13 +273,21 @@ var hitsound = preload("res://HitSound.tscn")
 func _set_hp(new):
 	if iframes:
 		return
-	var new_hitsound = hitsound.instance()
-	get_parent().add_child(new_hitsound)
+	
 	hp = new
+	$CanvasLayer/HP.text = "health: " + str(hp)
+	if new == max_hp:
+		return
+	
 	if hp <= 0:
-		print("player died")
+		get_tree().reload_current_scene()
 	else:
 		iframes = true
 #		$IFrameTimer.start()
 		$EffectPlayer.play("Blink")
+	var new_hitsound = hitsound.instance()
+	get_parent().add_child(new_hitsound)
+
 	
+func _hookprojectile_failed():
+	clear_hookprojectile_points()

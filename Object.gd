@@ -4,7 +4,7 @@ extends KinematicBody2D
 var player : KinematicBody2D = null
 
 var velocity : Vector2
-var speed = 25
+export var speed = 25
 var friction = 0.1
 
 var navigation : Navigation2D
@@ -23,6 +23,8 @@ var armor_strength : float = 0 setget _set_armor_strength
 export var harmful := true
 
 signal on_death
+
+var boss = false
 
 func _physics_process(delta):
 #	if (falling && velocity.length() < 300) || true_falling:

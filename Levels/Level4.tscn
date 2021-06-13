@@ -190,6 +190,7 @@ position = Vector2( 2240, 104 )
 
 [node name="LevelExit" parent="." instance=ExtResource( 14 )]
 position = Vector2( 3680, 8 )
+next_level = "res://Levels/Level5.tscn"
 
 [connection signal="on_death" from="Enemies/Golem2" to="Gate3" method="reduce_input"]
 [connection signal="on_death" from="Enemies/Golem3" to="Gate5" method="reduce_input"]
