@@ -240,7 +240,7 @@ func remove_hookpoint(hookpoint):
 
 
 func _on_EnemyDetector_body_entered(body):
-	pass # Replace with function body.
+	self.hp -= 1
 
 
 func _on_PitDetector_body_entered(body):

@@ -20,4 +20,5 @@ func destroy():
 		new_explosion.global_position = global_position
 		new_explosion.force = velocity
 		get_tree().get_root().add_child(new_explosion)
+	emit_signal("on_death")
 	queue_free()

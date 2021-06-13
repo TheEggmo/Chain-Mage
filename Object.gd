@@ -7,6 +7,8 @@ var velocity : Vector2
 var speed = 25
 var friction = 0.1
 
+var navigation : Navigation2D
+
 #var direction := Vector2.ZERO
 
 var free_movement := true setget _set_free_movement
@@ -17,6 +19,8 @@ var attached := false
 
 var armored := false
 var armor_strength : float = 0 setget _set_armor_strength
+
+signal on_death
 
 func _physics_process(delta):
 	if (falling && velocity.length() < 300) || true_falling:
@@ -59,6 +63,7 @@ func destroy():
 	if falling:
 		new_death_particles.scale = scale * 2
 	get_tree().get_root().add_child(new_death_particles)
+	emit_signal("on_death")
 	queue_free()
 
 func _on_PitDetector_body_entered(body):

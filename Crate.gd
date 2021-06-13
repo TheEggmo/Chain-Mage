@@ -7,4 +7,5 @@ func destroy():
 	if falling:
 		new_death_particles.scale = scale * 2
 	get_tree().get_root().add_child(new_death_particles)
+	emit_signal("on_death")
 	queue_free()

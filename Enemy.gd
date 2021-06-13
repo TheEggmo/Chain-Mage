@@ -9,8 +9,11 @@ func _physics_process(delta):
 		if free_movement:
 			direction = Vector2.ZERO
 			velocity = lerp(velocity, Vector2.ZERO, friction)
-			if player:
-				direction = global_position.direction_to(player.global_position)
+			var path_to_player
+			if is_instance_valid(player) && is_instance_valid(navigation):
+				path_to_player = navigation.get_simple_path(global_position, player.global_position)
+			
+			if path_to_player: print(path_to_player)
 			
 			if direction == Vector2.ZERO:
 				$AnimationPlayer.play("Idle")
